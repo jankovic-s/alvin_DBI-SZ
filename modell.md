@@ -3,47 +3,52 @@
 ```plantuml
 @startuml
 
-class User {
+class Account<<Collection>> {
     *Id : Guid
     *Firstname : string
     *Lastname : string
-    *Male : int
+    *Gender : Gender
     *Birthdate : int
     *Password : string
-    *User Type : usertype
+    *Salt : string
+    *IsAdmin : bool
+}
+Account *--> Gender
+
+class User {
+    *Parents : List<ParentsAccount>
     *Costs : List<Cost>
 }
+User *--> ParentsAccount
 
+class ParentsAccount {
 
-class UserType {
-    *Id : Guid
-    *Name : string
 }
 
+ParentsAccount -up-|> Account
+User -up-|> Account
 
-class Image  {
-    *Persons : List<ImagePerson>
-}
 
 class Cost {
-    *Id : Guid
     *Name : string
-    *IsMonthly : bool
-    *Fee : int
+    *CostFrequency : CostFrequency
+    *Fee : decimal
+}
+Cost *--> CostFrequency
+
+enum CostFrequency {
+    Dayly,
+    Weekly,
+    Monthly,
+    Yearly,
+    Single
 }
 
-class Screenshot {
-    *Id : Guid
-    *User : User
-    *Bank : string
+enum Gender {
+    Female,
+    Male
 }
 
-class Admin {
-    *Username : string
-}
-
-
-User *--> UserType
 User *--> Cost
 
 

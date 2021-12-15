@@ -43,6 +43,9 @@ class Admin {
 }
 
 
+User *--> UserType
+User *--> Cost
+
 
 
 @enduml
